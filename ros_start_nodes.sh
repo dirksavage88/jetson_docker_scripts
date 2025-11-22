@@ -98,7 +98,7 @@ DOCKER_ARGS+=("-e FASTRTPS_DEFAULT_PROFILES_FILE=/usr/local/share/middleware_pro
 DOCKER_ARGS+=("-e ROS_DOMAIN_ID")
 
 if [[ $PLATFORM == "aarch64" ]]; then
-    DOCKER_ARGS+=("-v /usr/local/cuda-10.2/targets/aarch64-linux/lib/:/usr/local/cuda-10.2/targets/aarch64-linux/lib/")
+    DOCKER_ARGS+=("-v /usr/local/cuda-12.6/targets/aarch64-linux/lib/:/usr/local/cuda-12.6/targets/aarch64-linux/lib/")
     DOCKER_ARGS+=("-v /usr/bin/tegrastats:/usr/bin/tegrastats")
     DOCKER_ARGS+=("-v /tmp/argus_socket:/tmp/argus_socket")
     DOCKER_ARGS+=("-v /usr/lib/aarch64-linux-gnu/tegra:/usr/lib/aarch64-linux-gnu/tegra")
@@ -163,7 +163,7 @@ echo "Attaching to running container: static tf"
 docker exec -d -u admin --workdir $CONTAINER_WS_DIR/ros_ws $CONTAINER_NAME $CONTAINER_WS_DIR/static_tf.sh
 
 echo "Attaching to running container: VSLAM"
-docker exec -d -u admin --workdir $CONTAINER_WS_DIR/ros_ws $CONTAINER_NAME $CONTAINER_WS_DIR/isaac_ros_vslam.sh
+docker exec -d -u admin --workdir $CONTAINER_WS_DIR/ros_ws $CONTAINER_NAME $CONTAINER_WS_DIR/isaac_ros_visual_slam.sh
 
 echo "Attaching to running container: px4_vslam"
 docker exec -d -u admin --workdir $CONTAINER_WS_DIR/ros_ws $CONTAINER_NAME $CONTAINER_WS_DIR/px4_vslam.sh
