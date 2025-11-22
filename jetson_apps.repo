@@ -1,37 +1,25 @@
 repositories:
   isaac_ros_common:
     type: git
-    url: https://github.com/dirksavage88/isaac_ros_common.git
-    version: b1b6d923b6647a1bbc1ac74245f6fdcf5a7ec290
-  isaac_ros_image_pipeline:
-    type: git
-    url: https://github.com/dirksavage88/isaac_ros_image_pipeline.git
-    version: 8ae0cc7f212dc60084ca1e725c660456c2783fa3
-  isaac_ros_apriltag:
-    type: git
-    url: https://github.com/dirksavage88/isaac_ros_apriltag.git
-    version: 86a51209808cde3e7dea300d9fe75f209ebc7e84
+    url: https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_common.git
+    version: fcf4d9e17f8f0a7f47f1d22d6a18421ce3768c01
   isaac_ros_visual_slam:
     type: git
-    url: https://github.com/dirksavage88/isaac_ros_visual_slam.git
-    version: 642c66906042a34690fb9e8481dd2c2819319c1e
-  ros2_usb_camera:
+    url: https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_visual_slam.git
+    version: e31f4cc1d41a329a01946e5fe63669f8b15da677
+  isaac_ros_nitros:
     type: git
-    url: https://github.com/dirksavage88/ros2_usb_camera.git
-    version: 4b8dad8e0d13c87446b91fc13f68992192cd79cb
-  side_x_side_stereo:
-    type: git
-    url: https://github.com/dirksavage88/side_x_side_stereo.git
-    version: 1404a848e98c5ba56460cc34a7f6fd68d0279e74
+    url: https://github.com/dirksavage88/isaac_ros_nitros.git
+    version: 00853504839db32b310c81617e80987c60ae3f90
   PX4-Isaac-VIO-bridge:
     type: git
     url: https://github.com/ARK-Electronics/PX4-Isaac-VIO-bridge.git
-    version: 75314ce290e649d48858603ec4776b6b8a40d539
+    version: 2c953a222510f303c9f2cfbd66d002b66da26c31 
   px4_msgs:
     type: git
     url: https://github.com/PX4/px4_msgs.git
-    version: 820b0db5414dad89d49dbb1b65a3e311a2f7f418
-  image_common:
+    version: 4d081eb8ed014afce05d9b27d240c797164b096b
+  magic_enum:
     type: git
-    url: https://github.com/ros-perception/image_common.git
-    version: aa987ea9d053b1895fb4bf62d3e0eade060b9612
+    url: https://github.com/Neargye/magic_enum.git
+    version: 83ab7f4f578bd00e1026a7cd9f7baa4f1a62cbeb
