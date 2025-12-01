@@ -1,9 +1,9 @@
-# jetson_nano_1804_docker_scripts
-Bring up ROS 2 and docker on the Jetson Nano/Jetson TX2 NX
+# jetson_orin_nano_2204_docker_scripts
+Bring up ROS 2 and docker on the Jetson Orin Nano/NX
 
-This repo is assuming you are using a recent version of Jetpack (tested on Jetpack v4.6.x or v4.7.x) on the Jetson Nano or Jetson TX2 NX
+This repo is assuming you are using a recent version of Jetpack (tested on Jetpack v6.2) on the Jetson Orin Nano or Jetson Orin NX
 
-If you have not installed/configured the Nvidia Contaainer Toolkit AND Isaac ROS Common **->>>** **STOP** **>>>** **these install scripts will not work until you have successfully installed the Nvidia Container Toolkit and ran the 'run_dev.sh' script in Isaac ROS Common:** https://github.com/dirksavage88/isaac_ros_common
+If you have not installed/configured the Nvidia Contaainer Toolkit AND Isaac ROS Common **->>>** **STOP** **>>>** **these install scripts will not work until you have successfully installed the Nvidia Container Toolkit and ran the 'run_dev.sh' script in Isaac ROS Common:** [https://github.com/dirksavage88/isaac_ros_common](https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_common/tree/release-3.2)
 
 Step 1) Clone the repo into your home directory.
 
@@ -11,7 +11,7 @@ Step 2) Copy all install scripts into ~/workspaces/isaac_ros-dev. You should alr
 
 Step 3) change directories to ~/workspaces/isaac_ros-dev and run the command 'sudo chmod +rwx *.sh'
 
-Step 4) run the command './jetson_nano_bringup.sh', this takes a while the first time through, once in the container, change directory to ros_ws and colcon build (also takes a while). Once it finishes exit the container.
+Step 4) run the vcs tool python commands to pull in the repos from the .repo file, this takes a while to download.
 
 Step 5) Ensure you have the isaac ros docker image listed by running 'docker image ls'
 
