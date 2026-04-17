@@ -90,7 +90,8 @@ CONTAINER_NAME="$BASE_NAME"
 
 # Map host's display socket to docker
 DOCKER_ARGS+=("-v /tmp/.X11-unix:/tmp/.X11-unix")
-DOCKER_ARGS+=("-v $HOME/.Xauthority:/home/admin/.Xauthority:rw")
+DOCKER_ARGS+=("-v /etc/passwd:/etc/passwd:ro")
+DOCKER_ARGS+=("-v $HOME/.Xauthority:/home/root/.Xauthority:rw")
 DOCKER_ARGS+=("-e DISPLAY")
 DOCKER_ARGS+=("-e NVIDIA_VISIBLE_DEVICES=all")
 DOCKER_ARGS+=("-e NVIDIA_DRIVER_CAPABILITIES=all")
@@ -105,7 +106,7 @@ if [[ $PLATFORM == "aarch64" ]]; then
     DOCKER_ARGS+=("-v /usr/src/jetson_multimedia_api:/usr/src/jetson_multimedia_api")
     DOCKER_ARGS+=("-v /opt/nvidia/nsight-systems-cli:/opt/nvidia/nsight-systems-cli")
     DOCKER_ARGS+=("--pid=host")
-    DOCKER_ARGS+=("--group-add=i2c")
+    #DOCKER_ARGS+=("--group-add=i2c")
 
     # If jtop present, give the container access
     if [[ $(getent group jtop) ]]; then
@@ -130,7 +131,7 @@ fi
 print_info "Running $CONTAINER_NAME"
 
 CONTAINER_WS_DIR="/workspaces/isaac_ros-dev"
-
+SCRIPT_WS_DIR="$HOME/source/jetson_docker_scripts"
 docker run \
 	--detach \
 	--rm \
@@ -140,9 +141,10 @@ docker run \
     -v $ISAAC_ROS_DEV_DIR:$CONTAINER_WS_DIR \
     -v /dev/*:/dev/* \
     -v /etc/localtime:/etc/localtime:ro \
+    -v /usr/bin/gst-launch-1.0:/usr/bin/gst-launch-1.0 \
     --name "$CONTAINER_NAME" \
     --runtime nvidia \
-    --user="admin" \
+    --user="root" \
     --entrypoint $CONTAINER_WS_DIR/ros-nodes_entrypoint.sh \
     --workdir $CONTAINER_WS_DIR \
     $BASE_NAME \
@@ -150,22 +152,19 @@ docker run \
 
 # Attach to running container
 
-echo "Attaching to running container: ros2 usb cam"
-docker exec -d -u admin --workdir $CONTAINER_WS_DIR/ros_ws $CONTAINER_NAME $CONTAINER_WS_DIR/ros2_usbcam.sh
-
-echo "Attaching to running container: Image proc"
-docker exec -d -u admin --workdir $CONTAINER_WS_DIR/ros_ws $CONTAINER_NAME $CONTAINER_WS_DIR/isaac_ros_image_proc.sh
-
-echo "Attaching to running container: stereo split"
-docker exec -d -u admin --workdir $CONTAINER_WS_DIR/ros_ws $CONTAINER_NAME $CONTAINER_WS_DIR/side_x_side.sh
+#echo "Attaching to running container: Image proc"
+#docker exec -d -u root --workdir $CONTAINER_WS_DIR $CONTAINER_NAME $CONTAINER_WS_DIR/isaac_ros_image_proc.sh
 
 echo "Attaching to running container: static tf"
-docker exec -d -u admin --workdir $CONTAINER_WS_DIR/ros_ws $CONTAINER_NAME $CONTAINER_WS_DIR/static_tf.sh
+docker exec -d -u root --workdir $CONTAINER_WS_DIR $CONTAINER_NAME $CONTAINER_WS_DIR/static_tf.sh
 
 echo "Attaching to running container: VSLAM"
-docker exec -d -u admin --workdir $CONTAINER_WS_DIR/ros_ws $CONTAINER_NAME $CONTAINER_WS_DIR/isaac_ros_visual_slam.sh
+docker exec -d -u root --workdir $CONTAINER_WS_DIR $CONTAINER_NAME $CONTAINER_WS_DIR/isaac_ros_vslam.sh
+
+echo "Attaching to running container: Orbbec Driver"
+docker exec -d -u root --workdir $CONTAINER_WS_DIR $CONTAINER_NAME $CONTAINER_WS_DIR/orbbec_camera.sh
 
 echo "Attaching to running container: px4_vslam"
-docker exec -d -u admin --workdir $CONTAINER_WS_DIR/ros_ws $CONTAINER_NAME $CONTAINER_WS_DIR/px4_vslam.sh
+docker exec -d -u root --workdir $CONTAINER_WS_DIR $CONTAINER_NAME $CONTAINER_WS_DIR/px4_vslam.sh
 
 echo "Processes started, exiting."
