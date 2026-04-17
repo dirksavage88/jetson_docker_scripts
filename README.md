@@ -1,7 +1,7 @@
 # jetson_orin_nano_2204_docker_scripts
 Bring up ROS 2 and docker on the Jetson Orin Nano/NX
 
-This repo is assuming you are using a recent version of Jetpack (tested on Jetpack v6.2) on the Jetson Orin Nano or Jetson Orin NX
+This repo is assuming you are using a recent version of Jetpack (requires Jetpack v6.2, will not work on v6.0) on the Jetson Orin Nano or Jetson Orin NX
 
 If you have not installed/configured the Nvidia Contaainer Toolkit AND Isaac ROS Common **->>>** **STOP** **>>>** **these install scripts will not work until you have successfully installed the Nvidia Container Toolkit and ran the 'run_dev.sh' script in Isaac ROS Common:** [https://github.com/dirksavage88/isaac_ros_common](https://github.com/NVIDIA-ISAAC-ROS/isaac_ros_common/tree/release-3.2)
 
