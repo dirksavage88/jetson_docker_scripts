@@ -95,7 +95,9 @@ DOCKER_ARGS+=("-v $HOME/.Xauthority:/home/root/.Xauthority:rw")
 DOCKER_ARGS+=("-e DISPLAY")
 DOCKER_ARGS+=("-e NVIDIA_VISIBLE_DEVICES=all")
 DOCKER_ARGS+=("-e NVIDIA_DRIVER_CAPABILITIES=all")
+DOCKER_ARGS+=("-e RMW_IMPLEMENTATION=rmw_fastrtps_cpp")
 DOCKER_ARGS+=("-e FASTRTPS_DEFAULT_PROFILES_FILE=/usr/local/share/middleware_profiles/rtps_udp_profile.xml")
+DOCKER_ARGS+=("-e RMW_FASTRTPS_USE_QOS_FROM_XML=1")
 DOCKER_ARGS+=("-e ROS_DOMAIN_ID")
 
 if [[ $PLATFORM == "aarch64" ]]; then
@@ -130,7 +132,7 @@ fi
 # Run container from image
 print_info "Running $CONTAINER_NAME"
 
-CONTAINER_WS_DIR="/workspaces/isaac_ros-dev"
+CONTAINER_WS_DIR="/home/jetsonorin/workspaces/isaac_ros-dev"
 SCRIPT_WS_DIR="$HOME/source/jetson_docker_scripts"
 docker run \
 	--detach \
@@ -142,6 +144,7 @@ docker run \
     -v /dev/*:/dev/* \
     -v /etc/localtime:/etc/localtime:ro \
     -v /usr/bin/gst-launch-1.0:/usr/bin/gst-launch-1.0 \
+    -v $CONTAINER_WS_DIR/rtps_udp_profile.xml:/usr/local/share/middleware_profiles/rtps_udp_profile.xml \
     --name "$CONTAINER_NAME" \
     --runtime nvidia \
     --user="root" \
@@ -151,15 +154,6 @@ docker run \
     /bin/bash
 
 # Attach to running container
-
-#echo "Attaching to running container: Image proc"
-#docker exec -d -u root --workdir $CONTAINER_WS_DIR $CONTAINER_NAME $CONTAINER_WS_DIR/isaac_ros_image_proc.sh
-
-echo "Attaching to running container: static tf"
-docker exec -d -u root --workdir $CONTAINER_WS_DIR $CONTAINER_NAME $CONTAINER_WS_DIR/static_tf.sh
-
-echo "Attaching to running container: VSLAM"
-docker exec -d -u root --workdir $CONTAINER_WS_DIR $CONTAINER_NAME $CONTAINER_WS_DIR/isaac_ros_vslam.sh
 
 echo "Attaching to running container: Orbbec Driver"
 docker exec -d -u root --workdir $CONTAINER_WS_DIR $CONTAINER_NAME $CONTAINER_WS_DIR/orbbec_camera.sh
